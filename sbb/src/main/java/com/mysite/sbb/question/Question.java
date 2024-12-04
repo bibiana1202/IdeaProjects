@@ -1,12 +1,12 @@
-package com.mysite.sbb;
+package com.mysite.sbb.question;
+
+import com.mysite.sbb.answer.Answer;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import jakarta.persistence.*;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Setter
@@ -25,6 +25,7 @@ public class Question {
 
     private LocalDateTime createDate;
 
+    // 참조 : 하나의 Question 객체가 여러개의 Answer 객체를 가질수 있다.
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
 }

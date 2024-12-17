@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration // 스프링의 환경 설정 파일
 @EnableWebSecurity // 모든 요청 URL이 스프링 시큐리티의 제어를 받도록 만드는 애너테이션 , 스프링 시큐리티를 활성화 하는 역할
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true,jsr250Enabled = true) //QuestionController와 AnswerController에서 로그인 여부를 판별할 때 사용한 PreAuthorize 애너테이션을 사용하기 위해 반드시 필요한 설정
 public class SecurityConfig {
     // 내부적으로 SecurityFilterChain 클래스가 동작하여 모든 요청 URL에 이 클래스가 필터로 적용되어 URL별로 특별한 설정을 할수 있게 된다.
     // 스프링 시큐리티 세부 설정은 Bean 애너테이션을 통해 SecurityFilterChain 빈을 생성하여 설정할수 있다.
@@ -36,6 +38,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // 스프링 시큐리티의 인증을 처리
     // AuthenticationManager 빈을 생성
     // AuthenticationManager는 Spring Security의 핵심 인터페이스로, 사용자 인증을 담당 -> 실제로 인증 요청이 들어오면 사용자 정보를 검사하고, 그에 따라 인증 여부를 결정
     // 사용자 인증 시 앞에서 작성한 UserSecurityService와 PasswordEncoder를 내부적으로 사용하여 인증과 권한 부여 프로세스를 처리

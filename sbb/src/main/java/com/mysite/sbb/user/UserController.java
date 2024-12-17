@@ -37,7 +37,9 @@ public class UserController {
 
         // 중복 회원 방지
         try{
-            userService.create(userCreateForm.getUsername(),userCreateForm.getEmail(),userCreateForm.getPassword1());
+            userService.create(userCreateForm.getUsername(),
+                               userCreateForm.getEmail(),
+                               userCreateForm.getPassword1());
         }
         catch(DataIntegrityViolationException e) {
             e.printStackTrace();
@@ -58,4 +60,6 @@ public class UserController {
     public String login() {
         return "login_form";
     }
+
+    //실제 로그인을 진행하는 @PostMapping 방식의 메서드는 스프링 시큐리티가 대신 처리하므로 우리가 직접 코드를 작성하여 구현할 필요가 없다.
 }
